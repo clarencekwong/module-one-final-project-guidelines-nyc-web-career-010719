@@ -13,7 +13,7 @@ class Teacher < ActiveRecord::Base
   def self.add_assignments(id)
     assignment = Assignment.create(title: nil,subject: nil,instruction: nil,start_date: nil,due_date: nil,submission_date: nil,status: "pending",student_id: nil,teacher_id: id.to_i)
     puts "Enter Assignment title: "
-    assignment.title = gets.chomp
+    assignment.title = gets.chomp.capitalize
     puts "Enter Assignment subject: "
     assignment.subject = gets.chomp
     puts "Enter Assignment instructions: "
@@ -72,6 +72,11 @@ class Teacher < ActiveRecord::Base
     assignment = find_assignment_by_teacher(id, assignment)
     assignment.student_id = student_id
     assignment.save
+  end
+
+  def self.delete_assignment(id, assignment)
+    assignment = find_assignment_by_teacher(id, assignment)
+    Assignment.destroy(assignment)
   end
 
 end

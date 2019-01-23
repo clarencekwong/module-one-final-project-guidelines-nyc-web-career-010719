@@ -160,6 +160,21 @@ def teacher_actions(action,id_input, type_of_user)
       puts "Put in a valid assignment"
       teacher_actions(action,id_input, type_of_user)
     end
+  elsif action == "4"
+    teacher_view(id_input)
+    puts "Which lab do you wish to delete? If you wish to return, please type in back."
+    assignment = gets.chomp.capitalize
+    assignment_by_teacher = Teacher.find_assignment_by_teacher(id_input,assignment)
+    if assignment_by_teacher
+      Teacher.delete_assignment(id_input,assignment)
+      puts "Lab deleted"
+      main_menu(type_of_user, id_input)
+    elsif assignment == "Back"
+      main_menu(type_of_user, id_input)
+    else
+      puts "Put in a valid assignment"
+      teacher_actions(action,id_input, type_of_user)
+    end
   elsif action == "5"
     initial_boot
   elsif action == "6"
