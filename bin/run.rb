@@ -1,6 +1,6 @@
 require_relative '../config/environment'
 
-main_menu
+initial_boot
 
 binding.pry
 puts "HELLO WORLD"

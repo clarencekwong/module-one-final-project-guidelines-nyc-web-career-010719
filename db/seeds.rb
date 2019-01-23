@@ -1,5 +1,5 @@
 Assignment.create(title: "Lab 01",subject: "Ruby",instruction: "Instruction Text",start_date: "19-01-10",due_date: "19-01-12",submission_date: nil,status: "pending",student_id: 1,teacher_id: 1)
-Assignment.create(title: "Lab 02",subject: "SQL",instruction: "Instruction Text",start_date: "19-01-15",due_date: "19-01-17",submission_date: nil,status: "pending",student_id: 2,teacher_id: 2)
+Assignment.create(title: "Lab 02",subject: "SQL",instruction: "Instruction Text",start_date: "19-01-15",due_date: "19-01-17",submission_date: nil,status: "pending",student_id: 1,teacher_id: 2)
 Assignment.create(title: "Lab 03",subject: "Rails",instruction: "Instruction Text",start_date: "19-01-19",due_date: "19-01-20",submission_date: nil,status: "pending",student_id: 3,teacher_id: 3)
 Assignment.create(title: "Lab 04",subject: "OO",instruction: "Instruction Text",start_date: "19-01-21",due_date: "19-01-23",submission_date: nil,status: "pending",student_id: 4,teacher_id: 3)
 Assignment.create(title: "Lab 05",subject: "DB",instruction: "Instruction Text",start_date: "19-01-25",due_date: "19-01-28",submission_date: nil,status: "pending",student_id: 5,teacher_id: 1)

@@ -5,15 +5,16 @@ class Student < ActiveRecord::Base
   def self.view_assignments(id)
     arr = []
     student = Student.find_by(id: id.to_i)
-    assignment = student.assignments.map {|assignment|
+    assignment = student.assignments.each {|assignment|
       arr << [assignment.title, assignment.subject,  assignment.start_date,     assignment.due_date, assignment.status]}
     arr
-    #   arr << assignment
-    # }
-    # arr.map {|assignment|
-    #   binding.pry
-    #   assignment
-    # }
+  end
+
+  def self.submit_assignments(id,assignment)
+    assignment = Assignment.find_by(student_id: id.to_i,title: assignment)
+    assignment.status = "Completed"
+    assignment.submission_date = Time.now
+    assignment.save
   end
 
 end
