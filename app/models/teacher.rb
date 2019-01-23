@@ -28,13 +28,19 @@ class Teacher < ActiveRecord::Base
     puts "Assignment added"
   end
 
-  def find_assignment_by_teacher(id, assignment)
+  def self.find_assignment_by_teacher(id, assignment)
     Assignment.find_by(teacher_id: id.to_i,title: assignment)
   end
 
   def self.update_title(id, assignment, title)
     assignment = find_assignment_by_teacher(id, assignment)
     assignment.title = title
+    assignment.save
+  end
+
+  def self.update_subject(id, assignment, subject)
+    assignment = find_assignment_by_teacher(id, assignment)
+    assignment.subject = subject
     assignment.save
   end
 
