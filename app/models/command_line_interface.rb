@@ -34,7 +34,7 @@ def person_finder(input)
 end
 
 def initial_boot
-  input = user_type
+  type_of_user = user_type
   id_input = id_submit
   person = person_finder(id_input)
   if person
@@ -43,16 +43,16 @@ def initial_boot
     puts "Please enter an existing ID"
     initial_boot
   end
-  main_menu(input)
+  main_menu(type_of_user, id_input)
 end
 
-def main_menu(input)
-  table_of_contents(input)
+def main_menu(type_of_user, id_input)
+  table_of_contents(type_of_user)
   action = gets.chomp
-  if input == "1"
-    student_actions(action,input)
-  else
-    teacher_actions(action,input)
+  if type_of_user == "1"
+    student_actions(action, id_input, type_of_user)
+  elsif type_of_user == "2"
+    teacher_actions(action, id_input, type_of_user)
   end
 end
 
@@ -68,47 +68,59 @@ def student_view(input)
   }
 end
 
-def student_submission(input)
+def teacher_view(input)
+  Teacher.view_assignments(input).map {|assignment|
+    puts "Assignment: #{assignment[0]} Subject: #{assignment[1]} Start Date: #{assignment[2]} End Date: #{assignment[3]} Status: #{assignment[4]}"
+    puts "***********************************************************"
+  }
+end
+
+def student_submission(type_of_user, input)
   student_view(input)
   puts "Please specify which lab you are going to submit, if you wish to return to the main menu type in back"
   user_input = gets.chomp.capitalize
   assignment = Assignment.find_by(student_id: input.to_i,title: user_input)
   if user_input == "Back"
-    main_menu(input)
+    main_menu(type_of_user, input)
   elsif assignment
     if assignment.status == "Completed"
       Student.submit_assignments(input,user_input)
       puts "Thank you for your re-submission"
-      student_submission(input)
+      student_submission(type_of_user, input)
     elsif assignment.status == "pending"
       Student.submit_assignments(input,user_input)
       puts "Thank you for your submission"
-      student_submission(input)
+      student_submission(type_of_user, input)
     end
   else
     puts "Please make sure to submit an appropriate assignment"
-    student_submission(input)
+    student_submission(type_of_user, input)
   end
 end
 
-def student_actions(action,input)
+def student_actions(action,id_input, type_of_user)
   if action == "1"
-    student_view(input)
-    main_menu(input)
+    student_view(id_input)
+    main_menu(type_of_user, id_input)
   elsif action == "2"
-    student_submission(input)
+    student_submission(type_of_user, id_input)
   elsif action == "5"
     initial_boot
   end
 end
 
 
-def teacher_actions(action,input)
+def teacher_actions(action,id_input, type_of_user)
   if action == "1"
-
-    main_menu(input)
+    teacher_view(id_input)
+    main_menu(type_of_user, id_input)
   elsif action == "2"
-
+    Teacher.add_assignments(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "3"
+    teacher_view(id_input)
+    Teacher.update_assignment_info(id_input)
+    main_menu(type_of_user, id_input)
   elsif action == "6"
     initial_boot
   end
