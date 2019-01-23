@@ -69,8 +69,8 @@ def table_of_contents(input)
   if input == "1"
     puts "1. View Assignments"
     puts "2. Submit Assignments"
-    puts "3. WIP"
-    puts "4. WIP"
+    puts "3. View Due Assignments (WIP)"
+    puts "4. Events near me (WIP)"
     puts "5. Log off"
     puts "6. Exit"
   else
@@ -94,11 +94,10 @@ end
 
 def student_view(input)
   Student.view_assignments(input).map {|assignment|
-    puts "Assignment: #{assignment[0]} Subject: #{assignment[1]} Start Date: #{assignment[2]} End Date: #{assignment[3]} Status: #{assignment[4]}"
+    puts "Assignment: #{assignment[0]} Subject: #{assignment[1]} Start Date: #{assignment[2]} End Date: #{assignment[3]} Status: #{assignment[4]} \nInstruction: #{assignment[5]}"
     puts "***********************************************************"
   }
 end
-
 
 def student_submission(type_of_user, input)
   student_view(input)

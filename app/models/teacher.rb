@@ -6,7 +6,7 @@ class Teacher < ActiveRecord::Base
     arr = []
     teacher = Teacher.find_by(id: id.to_i)
     assignment = teacher.assignments.each {|assignment|
-      arr << [assignment.title, assignment.subject,  assignment.start_date,     assignment.due_date, assignment.status]}
+      arr << [assignment.title, assignment.subject, assignment.start_date,     assignment.due_date, assignment.status]}
     arr
   end
 

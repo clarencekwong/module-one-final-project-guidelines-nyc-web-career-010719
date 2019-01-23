@@ -6,7 +6,7 @@ class Student < ActiveRecord::Base
     arr = []
     student = Student.find_by(id: id.to_i)
     assignment = student.assignments.each {|assignment|
-      arr << [assignment.title, assignment.subject,  assignment.start_date,     assignment.due_date, assignment.status]}
+      arr << [assignment.title, assignment.subject,  assignment.start_date,     assignment.due_date, assignment.status, assignment.instruction]}
     arr
   end
 
