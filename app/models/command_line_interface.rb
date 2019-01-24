@@ -102,12 +102,14 @@ def table_of_contents(input)
   else
     puts "1. View Students"
     puts "2. Create Student"
-    puts "3. Delete Student"
-    puts "4. View Teachers"
-    puts "5. Create Teacher"
-    puts "6. Delete Teacher"
-    puts "7. Log off"
-    puts "8. Exit"
+    puts "3. Update Student"
+    puts "4. Delete Student"
+    puts "5. View Teachers"
+    puts "6. Create Teacher"
+    puts "7. Update Teacher"
+    puts "8. Delete Teacher"
+    puts "9. Log off"
+    puts "10. Exit"
   end
 end
 
@@ -130,19 +132,26 @@ def admin_actions(action,id_input, type_of_user)
     main_menu(type_of_user, id_input)
   elsif action == "3"
     students_view(id_input)
-    Admin.delete_student(id_input)
+    update_student(type_of_user, id_input)
     main_menu(type_of_user, id_input)
   elsif action == "4"
-    teachers_view(id_input)
+    students_view(id_input)
+    Admin.delete_student(id_input)
     main_menu(type_of_user, id_input)
   elsif action == "5"
-    Admin.create_teacher(id_input)
+    teachers_view(id_input)
     main_menu(type_of_user, id_input)
   elsif action == "6"
+    Admin.create_teacher(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "7"
+    teachers_view(id_input)
+
+  elsif action == "8"
     teachers_view(id_input)
     Admin.delete_teacher(id_input)
     main_menu(type_of_user, id_input)
-  elsif action == "7"
+  elsif action == "9"
     initial_boot
   else
     exit!
@@ -151,16 +160,55 @@ end
 
 def students_view(input)
   Student.all.map {|student|
-    puts "Student: ID: #{student.id} First Name: #{student.first_name} Last Name: #{student.last_name} Module: #{student.module}}"
+    puts "Student: ID: #{student.id} First Name: #{student.first_name} Last Name: #{student.last_name} Module: #{student.module} Gender: #{student.gender} Age: #{student.age}}"
     puts "***********************************************************"
   }
 end
 
 def teachers_view(input)
   Teacher.all.map {|teacher|
-    puts "Teacher: ID: #{teacher.id} First Name: #{teacher.first_name} Last Name: #{teacher.last_name}}"
+    puts "Teacher: ID: #{teacher.id} First Name: #{teacher.first_name} Last Name: #{teacher.last_name} Gender: #{teacher.gender} Age: #{teacher.age}}"
     puts "***********************************************************"
   }
+end
+
+def update_student(type_of_user, student_id)
+  puts "What student id do you want to change?"
+  change_student = gets.chomp
+  student = Admin.find_student(change_student)
+  puts "What do you want to update?"
+  puts "1. First name"
+  puts "2. Last name"
+  puts "3. Module"
+  puts "4. Gender"
+  puts "5. Age"
+  puts "6. Back"
+  input = gets.chomp
+  if input == "1"
+    puts "Enter new first name"
+    change = gets.chomp.capitalize
+    student.first_name = change
+  elsif input == "2"
+    puts "Enter new last name: "
+    change = gets.chomp.capitalize
+    student.last_name = change
+  elsif input == "3"
+    puts "Enter module: "
+    change = gets.chomp
+    student.module = change
+  elsif input == "4"
+    puts "Enter gender: "
+    change = gets.chomp.capitalize
+    student.gender = change
+  elsif input == "5"
+    puts "Enter new age: "
+    change = gets.chomp
+    student.age = change
+  elsif input == "6"
+    main_menu(type_of_user, student_id)
+  end
+  student.save
+  puts "Student updated"
 end
 
 # *****************************************************************************

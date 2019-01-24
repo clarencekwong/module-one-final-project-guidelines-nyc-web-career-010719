@@ -82,4 +82,5 @@ class Admin < ActiveRecord::Base
     Teacher.find_by(first_name: first_name, last_name: last_name, gender: gender, age: age)
   end
 
+
 end
