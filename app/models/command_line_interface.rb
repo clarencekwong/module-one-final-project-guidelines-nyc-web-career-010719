@@ -146,7 +146,8 @@ def admin_actions(action,id_input, type_of_user)
     main_menu(type_of_user, id_input)
   elsif action == "7"
     teachers_view(id_input)
-
+    update_teacher(type_of_user, id_input)
+    main_menu(type_of_user, id_input)
   elsif action == "8"
     teachers_view(id_input)
     Admin.delete_teacher(id_input)
@@ -210,6 +211,41 @@ def update_student(type_of_user, student_id)
   student.save
   puts "Student updated"
 end
+
+def update_teacher(type_of_user, teacher_id)
+  puts "What teacher id do you want to change?"
+  change_teacher = gets.chomp
+  teacher = Admin.find_teacher(change_teacher)
+  puts "What do you want to update?"
+  puts "1. First name"
+  puts "2. Last name"
+  puts "3. Gender"
+  puts "4. Age"
+  puts "5. Back"
+  input = gets.chomp
+  if input == "1"
+    puts "Enter new first name"
+    change = gets.chomp.capitalize
+    teacher.first_name = change
+  elsif input == "2"
+    puts "Enter new last name: "
+    change = gets.chomp.capitalize
+    teacher.last_name = change
+  elsif input == "3"
+    puts "Enter gender: "
+    change = gets.chomp
+    teacher.gender = change
+  elsif input == "4"
+    puts "Enter new age: "
+    change = gets.chomp
+    teacher.age = change
+  elsif input == "5"
+    main_menu(type_of_user, teacher_id)
+  end
+  teacher.save
+  puts "Teacher updated"
+end
+
 
 # *****************************************************************************
 # STUDENT
