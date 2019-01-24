@@ -86,20 +86,25 @@ def table_of_contents(input)
 # Teacher table of content list of ADD ASSIGNMENT (C), SEE ASSIGNMENTS (R), UPDATE STATUS (U), UPDATE ASSIGNMENT INFO, DELETE ASSIGNMENT (D)
 
   if input == "1"
+    puts "*******************************"
     puts "1. View Assignments"
     puts "2. Submit Assignments"
     puts "3. View Due Assignments (WIP)"
     puts "4. Events near me (WIP)"
     puts "5. Log off"
     puts "6. Exit"
+    puts "*******************************"
   elsif input == "2"
+    puts "*******************************"
     puts "1. View Assignments"
     puts "2. Add Assignments"
     puts "3. Update Assignment Info"
     puts "4. Delete Assignment"
     puts "5. Log off"
     puts "6. Exit"
+    puts "*******************************"
   else
+    puts "*******************************"
     puts "1. View Students"
     puts "2. Create Student"
     puts "3. Update Student"
@@ -110,6 +115,7 @@ def table_of_contents(input)
     puts "8. Delete Teacher"
     puts "9. Log off"
     puts "10. Exit"
+    puts "*******************************"
   end
 end
 
