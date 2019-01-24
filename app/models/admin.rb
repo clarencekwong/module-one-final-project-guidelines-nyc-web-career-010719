@@ -74,12 +74,12 @@ class Admin < ActiveRecord::Base
     Teacher.find_by(id: id.to_i)
   end
 
-  def self.find_dupe_teacher(first_name, last_name, gender, age)
-    Teacher.find_by(first_name: first_name, last_name: last_name, gender: gender, age: age)
-  end
-
   def self.find_dupe_student(first_name, last_name, mod, gender, age)
     Student.find_by(first_name: first_name, last_name: last_name, module: mod, gender: gender, age: age)
+  end
+
+  def self.find_dupe_teacher(first_name, last_name, gender, age)
+    Teacher.find_by(first_name: first_name, last_name: last_name, gender: gender, age: age)
   end
 
 end
