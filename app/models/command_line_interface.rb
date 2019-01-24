@@ -437,6 +437,15 @@ def event_action(type_of_user,id_input)
   elsif event_action == "2"
     event_viewer(id_input)
     event_action(type_of_user,id_input)
+  elsif event_action == "3"
+    if Event.find_by(student_id: id_input)
+      rec_event = Event.recent_event(id_input)
+      puts "#{rec_event[0]} : #{rec_event[1]}"
+      event_action(type_of_user,id_input)
+    else
+      puts "Please add events to your account"
+      event_action(type_of_user,id_input)
+    end
   elsif event_action == "5"
     main_menu(type_of_user,id_input)
   elsif event_action == "6"

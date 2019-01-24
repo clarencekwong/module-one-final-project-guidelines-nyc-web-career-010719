@@ -6,7 +6,7 @@ def get_events_from_keyword(type_of_user, id_input)
   puts "To look for events, please provide a keyword to search. If you wish to return to the main menu, type in back"
   keyword_input = gets.chomp.capitalize
   if keyword_input == "Back"
-    main_menu(type_of_user,id_input)
+    event_action(type_of_user,id_input)
   else
     response_string = get_responses(keyword_input)
     response_hash = JSON.parse(response_string)
