@@ -9,12 +9,21 @@
 # *****************************************************************************
 
 def user_type
-  puts "Welcome User, please identify yourself as: 1. Student, 2. Teacher"
+  puts "Welcome User, please identify yourself as: 1. Student, 2. Teacher, 3. Admin \n Put exit or quit to back out."
   input = gets.chomp
   if input == "1" || input == "2"
     input
-  elsif input == "secretkey"
+  elsif input == "exit" || input == "quit"
     exit!
+  elsif input == "3"
+    puts "Please enter password: "
+    password = gets.chomp
+    if password == "password"
+      input
+    else
+      puts "Wrong password"
+      user_type
+    end
   else
     puts "Please enter an appropriate answer."
     user_type
@@ -34,17 +43,25 @@ end
 def person_finder(input,id_input)
   if input == "1"
     Student.find_by(id: "#{id_input}")
-  else
+  elsif input == "2"
     Teacher.find_by(id: "#{id_input}")
+  else
+    return
   end
 end
 
 def initial_boot
   type_of_user = user_type
-  id_input = id_submit
+  if type_of_user == "1" || type_of_user == "2"
+    id_input = id_submit
+  else
+    id_input = "3"
+  end
   person = person_finder(type_of_user,id_input)
   if person
     puts "Welcome, #{person.first_name} #{person.last_name} what would you like to do?"
+  elsif type_of_user == "3"
+    puts "Welcome, Admin, what would you like to do?"
   else
     puts "Please enter an existing ID"
     initial_boot
@@ -57,8 +74,10 @@ def main_menu(type_of_user, id_input)
   action = gets.chomp
   if type_of_user == "1"
     student_actions(action, id_input, type_of_user)
-  else
+  elsif type_of_user == "2"
     teacher_actions(action, id_input, type_of_user)
+  else
+    admin_actions(action,id_input, type_of_user)
   end
 end
 
@@ -73,13 +92,22 @@ def table_of_contents(input)
     puts "4. Events near me (WIP)"
     puts "5. Log off"
     puts "6. Exit"
-  else
+  elsif input == "2"
     puts "1. View Assignments"
     puts "2. Add Assignments"
     puts "3. Update Assignment Info"
     puts "4. Delete Assignment"
     puts "5. Log off"
     puts "6. Exit"
+  else
+    puts "1. View Students"
+    puts "2. Create Student"
+    puts "3. Delete Student"
+    puts "4. View Teachers"
+    puts "5. Create Teacher"
+    puts "6. Delete Teacher"
+    puts "7. Log off"
+    puts "8. Exit"
   end
 end
 
@@ -87,6 +115,53 @@ end
 # object when calling will refer to self. making changes to the database every time
 # keep as id, refer class methods where Class.id = id input
 # Assignment.all.find().where(id: id)
+
+
+# *****************************************************************************
+# ADMIN
+# *****************************************************************************
+
+def admin_actions(action,id_input, type_of_user)
+  if action == "1"
+    students_view(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "2"
+    Admin.create_student(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "3"
+    students_view(id_input)
+    Admin.delete_student(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "4"
+    teachers_view(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "5"
+    Admin.create_teacher(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "6"
+    teachers_view(id_input)
+    Admin.delete_teacher(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "7"
+    initial_boot
+  else
+    exit!
+  end
+end
+
+def students_view(input)
+  Student.all.map {|student|
+    puts "Student: ID: #{student.id} First Name: #{student.first_name} Last Name: #{student.last_name} Module: #{student.module}}"
+    puts "***********************************************************"
+  }
+end
+
+def teachers_view(input)
+  Teacher.all.map {|teacher|
+    puts "Teacher: ID: #{teacher.id} First Name: #{teacher.first_name} Last Name: #{teacher.last_name}}"
+    puts "***********************************************************"
+  }
+end
 
 # *****************************************************************************
 # STUDENT

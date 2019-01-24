@@ -1,6 +1,7 @@
 class Student < ActiveRecord::Base
   has_many :assignments
   has_many :teachers, through: :assignments
+  belongs_to :admin
 
   def self.view_assignments(id)
     arr = []
