@@ -89,8 +89,8 @@ def table_of_contents(input)
     puts "*******************************"
     puts "1. View Assignments"
     puts "2. Submit Assignments"
-    puts "3. View Due Assignments (WIP)"
-    puts "4. Events near me (WIP)"
+    puts "3. View Pending Assignments"
+    puts "4. Events"
     puts "5. Log off"
     puts "6. Exit"
     puts "*******************************"
@@ -289,12 +289,28 @@ def student_submission(type_of_user, input)
   end
 end
 
+def view_assignments_pending(id_input)
+  pending_exist = Assignment.where(student_id: id_input.to_i, status: "pending")
+  if pending_exist.length > 0
+    Student.view_due_assignments(id_input).map {|assignment| puts "Pending Assignment: #{assignment}"}
+    puts "***********************************************************"
+  else
+    puts "No assignments due."
+    puts "***********************************************************"
+  end
+end
+
 def student_actions(action,id_input, type_of_user)
   if action == "1"
     student_view(id_input)
     main_menu(type_of_user, id_input)
   elsif action == "2"
     student_submission(type_of_user, id_input)
+  elsif action == "3"
+    view_assignments_pending(id_input)
+    main_menu(type_of_user, id_input)
+  elsif action == "4"
+    event_action(type_of_user,id_input)
   elsif action == "5"
     initial_boot
   else
@@ -396,8 +412,7 @@ def update_assignment(update_input, id_input, assignment,type_of_user)
 end
 
 def teacher_update_menu
-  # Student table of content list of SEE ASSIGNMENTS (R), SUBMIT ASSIGNMENTS (U)
-  # Teacher table of content list of ADD ASSIGNMENT (C), SEE ASSIGNMENTS (R), UPDATE STATUS (U), UPDATE ASSIGNMENT INFO, DELETE ASSIGNMENT (D)
+  puts "***********************************************************"
   puts "1. Update title"
   puts "2. Update subject"
   puts "3. Update instructions"
@@ -406,4 +421,49 @@ def teacher_update_menu
   puts "6. Update status"
   puts "7. Update student id"
   puts "8. Back"
+  puts "***********************************************************"
+end
+
+# *****************************************************************************
+# EVENT
+# *****************************************************************************
+
+def event_action(type_of_user,id_input)
+  puts "Select an option below"
+  event_update_menu
+  event_action = gets.chomp
+  if event_action == "1"
+    get_events_from_keyword(type_of_user,id_input)
+  elsif event_action == "2"
+    event_viewer(id_input)
+    event_action(type_of_user,id_input)
+  elsif event_action == "5"
+    main_menu(type_of_user,id_input)
+  elsif event_action == "6"
+    initial_boot
+  elsif event_action == "7"
+    exit!
+  else
+    puts "Please select a valid option"
+    event_action(type_of_user,id_input)
+  end
+end
+
+def event_viewer(id_input)
+  Event.view_events(id_input).map {|event|
+    puts "#{event[0]} : #{event[1]}"
+    puts "***********************************************************"
+  }
+end
+
+def event_update_menu
+  puts "***********************************************************"
+  puts "1. Search for Events"
+  puts "2. View my Events"
+  puts "3. My Upcoming Event (WIP)"
+  puts "4. Delete an Event (WIP)"
+  puts "5. Back to main menu"
+  puts "6. Log out"
+  puts "7. Exit"
+  puts "***********************************************************"
 end

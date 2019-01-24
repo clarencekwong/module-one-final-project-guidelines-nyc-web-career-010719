@@ -1,4 +1,5 @@
 require 'bundler'
+require 'rest-client'
 require 'io/console'
 Bundler.require
 
@@ -9,4 +10,6 @@ require_relative '../app/models/assignment.rb'
 require_relative '../app/models/student.rb'
 require_relative '../app/models/teacher.rb'
 require_relative '../app/models/admin.rb'
+require_relative '../app/models/event.rb'
+require_relative '../app/models/api_communicator.rb'
 require_relative '../app/models/command_line_interface.rb'

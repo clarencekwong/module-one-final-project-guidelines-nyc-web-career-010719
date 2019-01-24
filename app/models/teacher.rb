@@ -1,13 +1,15 @@
 class Teacher < ActiveRecord::Base
   has_many :assignments
+  has_many :events
   has_many :students, through: :assignments
   belongs_to :admin
+  has_many :students, through: :events
 
   def self.view_assignments(id)
     arr = []
     teacher = Teacher.find_by(id: id.to_i)
     assignment = teacher.assignments.each {|assignment|
-      arr << [assignment.title, assignment.subject, assignment.start_date,     assignment.due_date, assignment.status]}
+      arr << [assignment.title, assignment.subject, assignment.start_date, assignment.due_date, assignment.status]}
     arr
   end
 
@@ -77,7 +79,7 @@ class Teacher < ActiveRecord::Base
 
   def self.delete_assignment(id, assignment)
     assignment = find_assignment_by_teacher(id, assignment)
-    Assignment.destroy(assignment)
+    Assignment.destroy(assignment.id)
   end
 
 end
