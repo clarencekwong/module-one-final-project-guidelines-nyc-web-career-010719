@@ -17,7 +17,7 @@ def user_type
     exit!
   elsif input == "3"
     puts "Please enter password: "
-    password = gets.chomp
+    password = STDIN.noecho(&:gets).chomp
     if password == "password"
       input
     else
