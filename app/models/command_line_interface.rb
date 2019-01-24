@@ -469,7 +469,7 @@ def event_update_menu
   puts "***********************************************************"
   puts "1. Search for Events"
   puts "2. View my Events"
-  puts "3. My Upcoming Event (WIP)"
+  puts "3. My Upcoming Event"
   puts "4. Delete an Event (WIP)"
   puts "5. Back to main menu"
   puts "6. Log out"
