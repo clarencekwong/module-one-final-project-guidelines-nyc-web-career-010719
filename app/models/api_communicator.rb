@@ -39,7 +39,7 @@ def get_event_names(response_hash)
     event_name = event_data["name"]
     event_date = event_data["dates"]["start"]["localDate"]
     event_arr << [event_name,event_date]
-    binding.pry
+    # binding.pry
    }
    event_arr
 end
@@ -56,6 +56,7 @@ def add_event(event_name,type_of_user,id_input,date)
     Event.create(event_name: event_name,teacher_id: id_input,student_id: nil,date: date,purchase_date: Time.now)
   end
 end
+
 
 # binding.pry
 # "hello"
