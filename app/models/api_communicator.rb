@@ -39,6 +39,7 @@ def get_event_names(response_hash)
     event_name = event_data["name"]
     event_date = event_data["dates"]["start"]["localDate"]
     event_arr << [event_name,event_date]
+    binding.pry
    }
    event_arr
 end

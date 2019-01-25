@@ -9,7 +9,7 @@
 # *****************************************************************************
 
 def user_type
-  puts "Welcome User, please identify yourself as: 1. Student, 2. Teacher, 3. Admin \n Put exit or quit to back out."
+  puts "Welcome User, please identify yourself as: 1. Student, 2. Teacher, 3. Admin \nPut exit or quit to back out."
   input = gets.chomp
   if input == "1" || input == "2"
     input

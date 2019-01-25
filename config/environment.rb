@@ -1,9 +1,11 @@
+ENV["SINATRA_ACTIVESUPPORT_WARNING"]="false"
 require 'bundler'
 require 'rest-client'
 require 'io/console'
 Bundler.require
 
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.db')
+ActiveRecord::Base.logger = nil
 require_all 'lib'
 
 require_relative '../app/models/assignment.rb'
