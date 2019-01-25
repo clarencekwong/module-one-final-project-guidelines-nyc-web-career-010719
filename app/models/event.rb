@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   def self.view_events(id)
     arr = []
     Event.where(student_id: id.to_i).each {|event|
-      arr << [event.id,event.event_name,event.date]
+      arr << [event.id,event.event_name,event.date,event.min_ticket_price,event.max_ticket_price]
     }
     arr
   end
@@ -18,12 +18,13 @@ class Event < ActiveRecord::Base
   end
 
 def self.delete_event(id)
-  puts "Enter Event id that you want to delete: "
-  event = gets.chomp
-  binding.pry
+  puts "Enter Event id that you want to delete: \nPut cancel if you wish to go back."
+  event = gets.chomp.capitalize
   if self.find_event(event)
     Event.destroy(event)
     puts "Event deleted"
+  elsif event == "Cancel"
+    return
   else
     puts "Event doesn't exist"
     return

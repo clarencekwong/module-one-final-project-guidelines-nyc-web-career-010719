@@ -160,8 +160,10 @@ def admin_actions(action,id_input, type_of_user)
     main_menu(type_of_user, id_input)
   elsif action == "9"
     initial_boot
-  else
+  elsif action == "10"
     exit!
+  else
+    main_menu(type_of_user, id_input)
   end
 end
 
@@ -313,8 +315,10 @@ def student_actions(action,id_input, type_of_user)
     event_action(type_of_user,id_input)
   elsif action == "5"
     initial_boot
-  else
+  elsif action == "6"
     exit!
+  else
+    main_menu(type_of_user, id_input)
   end
 end
 
@@ -331,11 +335,13 @@ def teacher_actions(action,id_input, type_of_user)
     main_menu(type_of_user, id_input)
   elsif action == "3"
     teacher_view(id_input)
-    puts "Which lab do you wish to update?"
+    puts "Which lab do you wish to update? Put cancel if you wish to abort making any changes."
     assignment = gets.chomp.capitalize
     assignment_by_teacher = Teacher.find_assignment_by_teacher(id_input,assignment)
     if assignment_by_teacher
       teacher_update_info_menu(id_input,assignment,action,type_of_user)
+    elsif assignment == "Cancel"
+      main_menu(type_of_user, id_input)
     else
       puts "Put in a valid assignment"
       teacher_actions(action,id_input, type_of_user)
@@ -359,6 +365,8 @@ def teacher_actions(action,id_input, type_of_user)
     initial_boot
   elsif action == "6"
     exit!
+  else
+    main_menu(type_of_user, id_input)
   end
 end
 
@@ -473,7 +481,7 @@ end
 
 def event_viewer(id_input)
   Event.view_events(id_input).map {|event|
-    puts "Event ID: #{event[0]} #{event[1]} : #{event[2]}"
+    puts "Event ID: #{event[0]} #{event[1]} : #{event[2]}\nLowest Price: #{event[3]} Highest Price: #{event[4]}"
     puts "***********************************************************"
   }
 end
