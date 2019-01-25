@@ -43,11 +43,14 @@ class Admin < ActiveRecord::Base
   end
 
   def self.delete_student(student_id)
-    puts "Enter Student id that you want to delete: "
-    student = gets.chomp
+    puts "Enter Student id that you want to delete: \nType cancel to back out."
+    student = gets.chomp.capitalize
     if self.find_student(student)
       Student.destroy(student)
       puts "Student deleted"
+    elsif student == "Cancel"
+      puts "Cancelled"
+      return
     else
       puts "Student doesn't exist"
       return
@@ -55,11 +58,14 @@ class Admin < ActiveRecord::Base
   end
 
   def self.delete_teacher(teacher_id)
-    puts "Enter Teacher id that you want to delete: "
-    teacher = gets.chomp
+    puts "Enter Teacher id that you want to delete: \nType cancel to back out."
+    teacher = gets.chomp.capitalize
     if self.find_teacher(teacher)
       Teacher.destroy(teacher)
       puts "Teacher deleted"
+    elsif teacher == "Cancel"
+      puts "Cancelled"
+      return
     else
       puts "Teacher doesn't exist"
       return
