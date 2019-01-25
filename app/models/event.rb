@@ -16,4 +16,17 @@ class Event < ActiveRecord::Base
     recent_event = [event_name,event_date]
     recent_event
   end
+
+  def self.cheapest_event(id)
+    student = grab_student_events_not_nil(id)
+    event_name = student.sort_by {|event| event[:min_ticket_price]}.first.event_name
+    event_price = student.sort_by {|event| event[:min_ticket_price]}.first.min_ticket_price
+    cheapest_event = [event_name,event_price]
+    cheapest_event
+  end
+
+  def self.grab_student_events_not_nil(id)
+    student = Student.find(id)
+    student.events.select {|event| event.min_ticket_price != nil}
+  end
 end

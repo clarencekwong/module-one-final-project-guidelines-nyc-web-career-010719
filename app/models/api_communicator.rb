@@ -40,9 +40,13 @@ def get_event_names(response_hash)
   response_hash["_embedded"]["events"].map {|event_data|
     event_name = event_data["name"]
     event_date = event_data["dates"]["start"]["localDate"]
-    binding.pry
-    event_min_price = event_data["priceRanges"][0]["min"]
-    event_max_price = event_data["priceRanges"][0]["max"]
+    if event_data["priceRanges"]
+      event_min_price = event_data["priceRanges"][0]["min"]
+      event_max_price = event_data["priceRanges"][0]["max"]
+    else
+      event_min_price = nil
+      event_max_price = nil
+    end
     event_arr << [event_name,event_date,event_min_price,event_max_price]
     # binding.pry
    }
@@ -56,9 +60,9 @@ end
 def add_event(event_name,type_of_user,id_input,date,min_price,max_price)
   # binding.pry
   if type_of_user == "1"
-    Event.create(event_name: event_name,teacher_id: nil,student_id: id_input,date: date,purchase_date: Time.now)
+    Event.create(event_name: event_name,teacher_id: nil,student_id: id_input,date: date,purchase_date: Time.now,min_ticket_price: min_price, max_ticket_price: max_price)
   else
-    Event.create(event_name: event_name,teacher_id: id_input,student_id: nil,date: date,purchase_date: Time.now)
+    Event.create(event_name: event_name,teacher_id: id_input,student_id: nil,date: date,purchase_date: Time.now,min_ticket_price: min_price, max_ticket_price: max_price)
   end
 end
 

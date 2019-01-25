@@ -447,10 +447,19 @@ def event_action(type_of_user,id_input)
       event_action(type_of_user,id_input)
     end
   elsif event_action == "5"
-    main_menu(type_of_user,id_input)
+    if Event.find_by(student_id: id_input)
+      cheap_event = Event.cheapest_event(id_input)
+      puts "#{cheap_event[0]} : $#{cheap_event[1]}"
+      event_action(type_of_user,id_input)
+    else
+      puts "Please add events to your account"
+      event_action(type_of_user,id_input)
+    end
   elsif event_action == "6"
-    initial_boot
+    main_menu(type_of_user,id_input)
   elsif event_action == "7"
+    initial_boot
+  elsif event_action == "8"
     exit!
   else
     puts "Please select a valid option"
@@ -471,8 +480,9 @@ def event_update_menu
   puts "2. View my Events"
   puts "3. My Upcoming Event"
   puts "4. Delete an Event (WIP)"
-  puts "5. Back to main menu"
-  puts "6. Log out"
-  puts "7. Exit"
+  puts "5. Cheapest event"
+  puts "6. Back to main menu"
+  puts "7. Log out"
+  puts "8. Exit"
   puts "***********************************************************"
 end
