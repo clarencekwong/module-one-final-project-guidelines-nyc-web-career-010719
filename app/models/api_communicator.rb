@@ -23,7 +23,9 @@ def get_events_from_keyword(type_of_user, id_input)
       elsif (1..event_list.length).to_a.include?(interest_input.to_i)
         event_name = event_list[interest_input.to_i-1][0]
         date = event_list[interest_input.to_i-1][1]
-        add_event(event_name,type_of_user,id_input,date)
+        min_price = event_list[interest_input.to_i-1][2]
+        max_price = event_list[interest_input.to_i-1][3]
+        add_event(event_name,type_of_user,id_input,date,min_price,max_price)
         event_action(type_of_user,id_input)
       else
         puts "Invalid response, returning to the main Event page."
@@ -38,25 +40,31 @@ def get_event_names(response_hash)
   response_hash["_embedded"]["events"].map {|event_data|
     event_name = event_data["name"]
     event_date = event_data["dates"]["start"]["localDate"]
-    event_arr << [event_name,event_date]
+    if event_data["priceRanges"]
+      event_min_price = event_data["priceRanges"][0]["min"]
+      event_max_price = event_data["priceRanges"][0]["max"]
+    else
+      event_min_price = nil
+      event_max_price = nil
+    end
+    event_arr << [event_name,event_date,event_min_price,event_max_price]
     # binding.pry
    }
    event_arr
 end
 
 def print_events(event_arr)
-  event_arr.each.with_index(1) {|event, index| puts "#{index}. #{event[0]} : #{event[1]}"; puts "------------------------------------------------------------------------"}
+  event_arr.each.with_index(1) {|event, index| puts "#{index}. #{event[0]} : #{event[1]} \n Min Ticket Price: #{event[2]} Max Ticket Price: #{event[3]}"; puts "------------------------------------------------------------------------"}
 end
 
-def add_event(event_name,type_of_user,id_input,date)
+def add_event(event_name,type_of_user,id_input,date,min_price,max_price)
   # binding.pry
   if type_of_user == "1"
-    Event.create(event_name: event_name,teacher_id: nil,student_id: id_input,date: date,purchase_date: Time.now)
+    Event.create(event_name: event_name,teacher_id: nil,student_id: id_input,date: date,purchase_date: Time.now,min_ticket_price: min_price, max_ticket_price: max_price)
   else
-    Event.create(event_name: event_name,teacher_id: id_input,student_id: nil,date: date,purchase_date: Time.now)
+    Event.create(event_name: event_name,teacher_id: id_input,student_id: nil,date: date,purchase_date: Time.now,min_ticket_price: min_price, max_ticket_price: max_price)
   end
 end
-
 
 # binding.pry
 # "hello"

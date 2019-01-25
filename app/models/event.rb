@@ -17,20 +17,33 @@ class Event < ActiveRecord::Base
     recent_event
   end
 
-  def self.delete_event(id)
-    puts "Enter Event id that you want to delete: "
-    event = gets.chomp
-    binding.pry
-    if self.find_event(event)
-      Event.destroy(event)
-      puts "Event deleted"
-    else
-      puts "Event doesn't exist"
-      return
-    end
+def self.delete_event(id)
+  puts "Enter Event id that you want to delete: "
+  event = gets.chomp
+  binding.pry
+  if self.find_event(event)
+    Event.destroy(event)
+    puts "Event deleted"
+  else
+    puts "Event doesn't exist"
+    return
   end
+end
 
-  def self.find_event(id)
-    Event.find_by(id: id.to_i)
+def self.find_event(id)
+  Event.find_by(id: id.to_i)
+end
+
+def self.cheapest_event(id)
+  student = grab_student_events_not_nil(id)
+  event_name = student.sort_by {|event| event[:min_ticket_price]}.first.event_name
+  event_price = student.sort_by {|event| event[:min_ticket_price]}.first.min_ticket_price
+  cheapest_event = [event_name,event_price]
+  cheapest_event
+end
+
+def self.grab_student_events_not_nil(id)
+  student = Student.find(id)
+  student.events.select {|event| event.min_ticket_price != nil}
   end
 end
