@@ -446,6 +446,10 @@ def event_action(type_of_user,id_input)
       puts "Please add events to your account"
       event_action(type_of_user,id_input)
     end
+  elsif event_action == "4"
+    event_viewer(id_input)
+    Event.delete_event(id_input)
+    event_action(type_of_user,id_input)
   elsif event_action == "5"
     main_menu(type_of_user,id_input)
   elsif event_action == "6"
@@ -460,7 +464,7 @@ end
 
 def event_viewer(id_input)
   Event.view_events(id_input).map {|event|
-    puts "#{event[0]} : #{event[1]}"
+    puts "Event ID: #{event[0]} #{event[1]} : #{event[2]}"
     puts "***********************************************************"
   }
 end
@@ -470,7 +474,7 @@ def event_update_menu
   puts "1. Search for Events"
   puts "2. View my Events"
   puts "3. My Upcoming Event"
-  puts "4. Delete an Event (WIP)"
+  puts "4. Delete an Event"
   puts "5. Back to main menu"
   puts "6. Log out"
   puts "7. Exit"

@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   def self.view_events(id)
     arr = []
     Event.where(student_id: id.to_i).each {|event|
-      arr << [event.event_name,event.date]
+      arr << [event.id,event.event_name,event.date]
     }
     arr
   end
@@ -15,5 +15,22 @@ class Event < ActiveRecord::Base
     event_date = Event.where(student_id: id.to_i).order(:date).first.date
     recent_event = [event_name,event_date]
     recent_event
+  end
+
+  def self.delete_event(id)
+    puts "Enter Event id that you want to delete: "
+    event = gets.chomp
+    binding.pry
+    if self.find_event(event)
+      Event.destroy(event)
+      puts "Event deleted"
+    else
+      puts "Event doesn't exist"
+      return
+    end
+  end
+
+  def self.find_event(id)
+    Event.find_by(id: id.to_i)
   end
 end
